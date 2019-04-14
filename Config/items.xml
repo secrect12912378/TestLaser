@@ -1,0 +1,85 @@
+<configs>
+<append xpath="/items">
+		<item name="mayicgunLaserRifle">
+			<property name="Extends" value="mayicgunFNFAL"/>
+			<property name="Tags" value="weapon,ranged,holdBreathAiming,reloadPenalty,gun,barrelAttachments,sideAttachments,stock,magazine,light,selfLoading,perkDeadEye"/>
+			<property name="HoldType" value="26"/>
+			<property name="Meshfile" value="#@modfolder:Resources/LaserRifle.unity3d?LaserRiflePrefab"/>
+			<property name="CustomIcon" value="7laserrifle"/>
+			<property name="Class" value="ItemClassToggle"/>
+			<property name="CrosshairOnAim" value="false"/>
+			<property name="CrosshairUpAfterShot" value="false"/>
+			<property name="DescriptionKey" value="mayicgunLaserRifleDesc"/>
+			<property name="Group" value="Ammo/Weapons,allFirearm,srifleFirearm"/>
+			<property name="ActionSkillGroup" value="Rifles"/>
+			<property name="CraftingSkillGroup" value="craftSkillGuns"/>
+			<property name="EconomicValue" value="3000"/>
+			<property name="EconomicBundleSize" value="1"/>
+			<property name="ActivateObject" value="lightSource"/>
+			<property class="Action0">
+				<property name="Class" value="Ranged"/>
+				<property name="Magazine_items" value="mayicammoLaserRound,mayicammoCorrosive,mayicammoExplosive,mayicammoIncendiary"/>
+				<property name="Reload_time" value="10"/>
+				<property name="Sound_start" value="laserfire1"/>
+				<property name="Sound_repeat" value=""/>
+				<property name="Sound_end" value=""/>
+				<property name="Sound_empty" value="weapon_empty"/>
+				<property name="Sound_reload" value="sniperrifle_reload"/></property>
+			<property class="Action1">
+				<property name="Class" value="Zoom"/>
+				<property name="Zoom_max_out" value="55"/>
+				<property name="Zoom_max_in" value="55"/>
+				<property name="ScopeCameraOffset" value=".0003,-.0643,.058"/></property>
+			<effect_group name="Base Effects">
+				<passive_effect name="MaxRange" operation="base_set" value="75"/>
+				<passive_effect name="DamageFalloffRange" operation="base_set" value="60"/>
+				<passive_effect name="RoundsPerMinute" operation="base_set" value="25"/>
+				<passive_effect name="BurstRoundCount" operation="base_set" value="1"/>
+				<passive_effect name="MagazineSize" operation="base_set" value="5"/>
+				<passive_effect name="ReloadSpeedMultiplier" operation="base_set" value=".5"/>
+				<passive_effect name="ModPowerBonus" operation="perc_add" value="0.1" tags="EntityDamage"/>
+				<passive_effect name="ModPowerBonus" operation="base_add" value="200" tags="EconomicValue"/>
+				<passive_effect name="SpreadDegreesVertical" operation="base_set" value=".2"/>
+				<passive_effect name="SpreadDegreesHorizontal" operation="base_set" value=".2"/>
+				<passive_effect name="SpreadMultiplierAiming" operation="base_set" value="0.04"/>
+				<passive_effect name="SpreadMultiplierCrouching" operation="base_set" value="0.8"/>
+				<passive_effect name="SpreadMultiplierWalking" operation="base_set" value="1.5"/>
+				<passive_effect name="SpreadMultiplierRunning" operation="base_set" value="2"/>
+				<passive_effect name="KickDegreesVertical" operation="base_set" value="0,0"/>
+				<passive_effect name="KickDegreesHorizontal" operation="base_set" value="0,0"/>
+				<display_value name="dRecoil" value="0" />
+				<passive_effect name="IncrementalSpreadMultiplier" operation="base_set" value="2.2"/>
+				<passive_effect name="WeaponHandling" operation="base_set" value="0"/>
+				<passive_effect name="DegradationMax" operation="base_set" value="200,800" tier="1,6"/>
+				<passive_effect name="DegradationPerUse" operation="base_set" value="1"/>
+				<triggered_effect trigger="onSelfPrimaryActionStart" action="AnimatorSetBool" target="self" property="shooting" value="true"/>
+				<triggered_effect trigger="onSelfPrimaryActionEnd" action="AnimatorSetBool" target="self" property="shooting" value="false"/>
+				<!-- Worked once? <triggered_effect trigger="onSelfItemActivate" action="AddBuff" target="other" buff="buffOrb"/>-->
+				<triggered_effect trigger="onSelfAimingGunStart" action="AddBuff" target="other" buff="buffOrb" value="true"/>
+				<triggered_effect trigger="onSelfAimingGunStop" action="RemoveBuff" target="other" buff="buffOrb" value="false"/>
+				<!--<triggered_effect trigger="onSelfSecondaryActionEnd" action="RemoveBuff" target="other" buff="buffOrb"/>  onReloadStart-->
+			</effect_group>
+		</item>
+		
+		
+		<item name="mayicammoLaserRound">
+			<property name="Extends" value="mayicammo10mm"/>
+			<property name="CustomIcon" value="7laserround"/>
+			<property name="EconomicValue" value="4"/>
+			<property name="EconomicBundleSize" value="2"/>
+			<property name="DescriptionKey" value="mayicammoLaserRoundDesc"/>
+			<property name="Group" value="Ammo/Weapons,allRounds,medRounds"/>
+			<effect_group name="Base Effects" tiered="false">
+				<passive_effect name="EntityDamage" operation="base_set" value="0"/>
+				<passive_effect name="BlockDamage" operation="base_set" value="200"/>
+				<passive_effect name="DamageModifier" operation="perc_add" value="2" tags="earth"/>
+				<passive_effect name="DamageModifier" operation="perc_add" value="2" tags="wood"/>
+				<passive_effect name="DamageModifier" operation="perc_add" value="4" tags="metal"/>
+				<passive_effect name="DamageModifier" operation="perc_add" value="2" tags="stone"/>
+				<triggered_effect trigger="onSelfDamagedOther" action="AddBuff" target="otherAOE" range="3" buff="buffLaser"/>
+				<triggered_effect trigger="onSelfDamagedOther" action="RemoveBuff" target="self" buff="buffLaser"/>
+				<triggered_effect trigger="onSelfBuffUpdate" action="RemoveBuff" target="self" buff="buffLaser"/>
+			</effect_group>
+		</item>
+		</append>
+		</configs>
